@@ -6,17 +6,18 @@ db = SQLAlchemy()
 load_dotenv()
 
 
-class Db:
+class DB:
     '''Database connection class to a PostgreSQL database'''
 
     def __init__(self, app=None):
         self.app = app
         self.db = db
+        self.session = db.session
 
         if app is not None:
             # Set database configuration before initializing SQLAlchemy
-            app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-                'DATABASE_URI')
+            app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://John:56465646@localhost/mydb"
+            app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
             db.init_app(app)
 
     def create_all(self):
@@ -31,12 +32,11 @@ class Db:
 
     def save(self, model_instance):
         '''Save a model instance to the database.'''
-        with self.app.app_context():
-            self.db.session.add(model_instance)
-            self.db.session.commit()
+        self.db.session.add(model_instance)
+        self.db.session.commit()
 
     def delete(self, model_instance):
         '''Delete a model instance from the database.'''
-        with self.app.app_context():
-            self.db.session.delete(model_instance)
-            self.db.session.commit()
+        
+        self.db.session.delete(model_instance)
+        self.db.session.commit()
