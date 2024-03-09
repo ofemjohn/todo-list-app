@@ -22,7 +22,7 @@ Follow the steps below to set up and run the application:
 
 <pre>
 ```
-git clone https://github.com/your-username/mydevconnect-todo.git
+git clone https://github.com/ofemjohn/todo-list-app
 cd mydevconnect-todo
 ```
 </pre>
